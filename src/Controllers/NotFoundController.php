@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Controllers;
+use App\Kernel\View\View;
 
 class NotFoundController
 {
   public function index()
   {
-    include_once APP_PATH . '/views/pages/not-found.php';
+    $view = new View();
+
+    $view->render('not-found');
   }
 }

@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Controllers;
+use App\Kernel\View\View;
 
 class IndexController
 {
   public function index()
   {
-    include_once APP_PATH . '/views/pages/index.php';
+    $view = new View();
+
+    $view->render('index');
   }
 }
