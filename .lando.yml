@@ -2,7 +2,7 @@ name: movie-aggregator-php
 recipe: lamp
 config:
   php: 8.2
-  webroot: .
+  webroot: public
 services:
   myservice:
     type: phpmyadmin
