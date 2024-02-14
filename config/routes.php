@@ -1,15 +1,12 @@
 <?php
-
 use App\Router\Route;
 
+use App\Controllers\IndexController;
+use App\Controllers\MoviesController;
+use App\Controllers\NotFoundController;
+
 return [
-  Route::get('/', function () {
-    include_once APP_PATH . '/views/pages/index.php';
-  }),
-  Route::get('/movies', function () {
-    include_once APP_PATH . '/views/pages/movies.php';
-  }),
-  Route::get('/404', function () {
-    include_once APP_PATH . '/views/pages/404.php';
-  })
+  Route::get('/', [IndexController::class, 'index']),
+  Route::get('/movies', [MoviesController::class, 'index']),
+  Route::get('/not-found', [NotFoundController::class, 'index'])
 ];

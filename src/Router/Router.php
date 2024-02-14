@@ -17,10 +17,27 @@ class Router
   {
     $route = $this->findRoute($uri, $method);
 
-    if ($route) {
-      return $route();
+    
+    if (!$route) {
+      $notFoundRoute = $this->routes['GET']['/not-found'];
+      
+      [$controller, $action] = $notFoundRoute->getAction();
+      
+      $controller = new $controller();
+
+      call_user_func([$controller, $action]);
+      
+      die();
+    }
+
+    if (is_array($route->getAction())) {
+      [$controller, $action] = $route->getAction();
+
+      $controller = new $controller();
+
+      call_user_func([$controller, $action]);
     } else {
-      return $this->routes['GET']['/404']();
+      call_user_func($route->getAction());
     }
   }
 
@@ -28,10 +45,7 @@ class Router
     $routes = $this->getRoutes();
 
     foreach ($routes as $route) {
-      $method = $route->getMethod();
-      $uri = $route->getUri();
-
-      $this->routes[$method][$uri] = $route->getAction();
+      $this->routes[$route->getMethod()][$route->getUri()] = $route;
     }
   }
 
