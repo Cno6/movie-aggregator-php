@@ -23,7 +23,7 @@ class MoviesController extends Controller
         ]);
 
         if (! $validation) {
-            dd('Validation failed', $this->request->getErrors());
+            $this->redirect('/admin/movies/add');
         }
 
         dd('Validation passed');
