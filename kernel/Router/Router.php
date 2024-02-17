@@ -2,6 +2,7 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Http\Request;
 use App\Kernel\View\View;
 
 class Router
@@ -11,12 +12,14 @@ class Router
         'POST' => [],
     ];
 
-    public function __construct(private View $view)
-    {
+    public function __construct(
+        private View $view,
+        private Request $request
+    ) {
         $this->initRoutes();
     }
 
-    public function dispatch(string $uri, string $method)
+    public function dispatch(string $uri, string $method): void
     {
         $route = $this->findRoute($uri, $method);
 
@@ -28,9 +31,10 @@ class Router
             $controller = new $controller();
 
             call_user_func([$controller, 'setView'], $this->view);
+            call_user_func([$controller, 'setRequest'], $this->request);
             call_user_func([$controller, $action]);
 
-            exit();
+            return;
         }
 
         if (is_array($route->getAction())) {
@@ -39,13 +43,14 @@ class Router
             $controller = new $controller();
 
             call_user_func([$controller, 'setView'], $this->view);
+            call_user_func([$controller, 'setRequest'], $this->request);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());
         }
     }
 
-    private function initRoutes()
+    private function initRoutes(): void
     {
         $routes = $this->getRoutes();
 
@@ -62,7 +67,7 @@ class Router
         return require_once APP_PATH.'/config/routes.php';
     }
 
-    private function findRoute(string $uri, string $method)
+    private function findRoute(string $uri, string $method): Route|false
     {
         if (! isset($this->routes[$method][$uri])) {
             return false;

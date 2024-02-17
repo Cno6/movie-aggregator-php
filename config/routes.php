@@ -8,5 +8,7 @@ use App\Kernel\Router\Route;
 return [
     Route::get('/', [IndexController::class, 'index']),
     Route::get('/movies', [MoviesController::class, 'index']),
+    Route::get('/admin/movies/add', [MoviesController::class, 'add']),
+    Route::post('/admin/movies/add', [MoviesController::class, 'store']),
     Route::get('/not-found', [NotFoundController::class, 'index']),
 ];
