@@ -4,64 +4,66 @@ namespace App\Kernel\Router;
 
 class Router
 {
-  private array $routes = [
-    'GET' => [],
-    'POST' => [],
-  ];
+    private array $routes = [
+        'GET' => [],
+        'POST' => [],
+    ];
 
-  public function __construct($var = null) {
-    $this->initRoutes();
-  }
-
-  public function dispatch(string $uri, string $method)
-  {
-    $route = $this->findRoute($uri, $method);
-
-    
-    if (!$route) {
-      $notFoundRoute = $this->routes['GET']['/not-found'];
-      
-      [$controller, $action] = $notFoundRoute->getAction();
-      
-      $controller = new $controller();
-
-      call_user_func([$controller, $action]);
-      
-      die();
+    public function __construct($var = null)
+    {
+        $this->initRoutes();
     }
 
-    if (is_array($route->getAction())) {
-      [$controller, $action] = $route->getAction();
+    public function dispatch(string $uri, string $method)
+    {
+        $route = $this->findRoute($uri, $method);
 
-      $controller = new $controller();
+        if (! $route) {
+            $notFoundRoute = $this->routes['GET']['/not-found'];
 
-      call_user_func([$controller, $action]);
-    } else {
-      call_user_func($route->getAction());
-    }
-  }
+            [$controller, $action] = $notFoundRoute->getAction();
 
-  private function initRoutes() {
-    $routes = $this->getRoutes();
+            $controller = new $controller();
 
-    foreach ($routes as $route) {
-      $this->routes[$route->getMethod()][$route->getUri()] = $route;
-    }
-  }
+            call_user_func([$controller, $action]);
 
-  /**
-   * @return Route[]
-   */
-  private function getRoutes()
-  {
-    return require_once APP_PATH . '/config/routes.php';
-  }
+            exit();
+        }
 
-  private function findRoute(string $uri, string $method) {
-    if (!isset($this->routes[$method][$uri])) {
-      return false;
+        if (is_array($route->getAction())) {
+            [$controller, $action] = $route->getAction();
+
+            $controller = new $controller();
+
+            call_user_func([$controller, $action]);
+        } else {
+            call_user_func($route->getAction());
+        }
     }
 
-    return $this->routes[$method][$uri];
-  }
+    private function initRoutes()
+    {
+        $routes = $this->getRoutes();
+
+        foreach ($routes as $route) {
+            $this->routes[$route->getMethod()][$route->getUri()] = $route;
+        }
+    }
+
+    /**
+     * @return Route[]
+     */
+    private function getRoutes()
+    {
+        return require_once APP_PATH.'/config/routes.php';
+    }
+
+    private function findRoute(string $uri, string $method)
+    {
+        if (! isset($this->routes[$method][$uri])) {
+            return false;
+        }
+
+        return $this->routes[$method][$uri];
+    }
 }

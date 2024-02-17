@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Kernel\View\View;
 
 class MoviesController
 {
-  public function index()
-  {
-    $view = new View();
+    public function index()
+    {
+        $view = new View();
 
-    $view->render('movies');
-  }
+        $view->render('movies');
+    }
 }
