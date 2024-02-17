@@ -8,7 +8,7 @@ abstract class Controller
 
     public function render($name)
     {
-        $this->view->render($name);
+        $this->view->renderPage($name);
     }
 
     public function setView($view)

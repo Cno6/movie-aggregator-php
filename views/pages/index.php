@@ -1,1 +1,9 @@
-<h1>Home page</h1>
+<?php
+/**
+ * @var App\Kernel\View\View $view
+ */
+?>
+
+<?php $view->renderComponent('start'); ?>
+Home page
+<?php $view->renderComponent('end'); ?>
