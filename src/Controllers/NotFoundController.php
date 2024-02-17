@@ -2,14 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Kernel\View\View;
+use App\Kernel\Controller\Controller;
 
-class NotFoundController
+class NotFoundController extends Controller
 {
     public function index()
     {
-        $view = new View();
-
-        $view->render('not-found');
+        $this->render('not-found');
     }
 }

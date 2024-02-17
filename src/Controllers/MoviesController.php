@@ -2,14 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Kernel\View\View;
+use App\Kernel\Controller\Controller;
 
-class MoviesController
+class MoviesController extends Controller
 {
     public function index()
     {
-        $view = new View();
-
-        $view->render('movies');
+        $this->render('movies');
     }
 }

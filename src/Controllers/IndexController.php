@@ -2,14 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Kernel\View\View;
+use App\Kernel\Controller\Controller;
 
-class IndexController
+class IndexController extends Controller
 {
     public function index()
     {
-        $view = new View();
-
-        $view->render('index');
+        $this->render('index');
     }
 }
