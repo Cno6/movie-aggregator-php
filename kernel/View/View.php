@@ -3,16 +3,16 @@
 namespace App\Kernel\View;
 
 use App\Kernel\Exceptions\ViewNotFoundException;
-use App\Kernel\Session\Session;
+use App\Kernel\Session\SessionInterface;
 
-class View
+class View implements ViewInterface
 {
     public function __construct(
-        private Session $session
+        private SessionInterface $session
     ) {
     }
 
-    public function renderPage(string $page)
+    public function renderPage(string $page): void
     {
 
         $viewPath = APP_PATH."/views/pages/$page.php";
@@ -26,7 +26,7 @@ class View
         include_once $viewPath;
     }
 
-    public function renderComponent(string $component)
+    public function renderComponent(string $component): void
     {
         $componentPath = APP_PATH."/views/components/$component.php";
 
