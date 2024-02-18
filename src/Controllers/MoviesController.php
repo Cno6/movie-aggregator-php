@@ -30,6 +30,10 @@ class MoviesController extends Controller
             $this->redirect('/admin/movies/add');
         }
 
-        dd('Validation passed');
+        $id = $this->getDatabase()->insert('movies', [
+            'name' => $this->request->input('name'),
+        ]);
+
+        dd("Movie {$this->request->input('name')} added with id: {$id}");
     }
 }
