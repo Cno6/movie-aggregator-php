@@ -4,15 +4,18 @@ namespace App\Kernel\Controller;
 
 use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Request;
+use App\Kernel\Session\Session;
 use App\Kernel\View\View;
 
 abstract class Controller
 {
     private View $view;
 
-    public Request $request;
+    private Request $request;
 
-    public Redirect $redirect;
+    private Redirect $redirect;
+
+    private Session $session;
 
     public function render(string $name): void
     {
@@ -37,5 +40,15 @@ abstract class Controller
     public function redirect(string $url): void
     {
         $this->redirect->to($url);
+    }
+
+    public function getSession(): Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(Session $session): void
+    {
+        $this->session = $session;
     }
 }
