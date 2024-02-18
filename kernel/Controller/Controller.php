@@ -11,11 +11,11 @@ abstract class Controller
 {
     private View $view;
 
-    private Request $request;
+    protected Request $request;
 
-    private Redirect $redirect;
+    protected Redirect $redirect;
 
-    private Session $session;
+    protected Session $session;
 
     public function render(string $name): void
     {

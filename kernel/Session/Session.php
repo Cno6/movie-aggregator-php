@@ -19,6 +19,11 @@ class Session
         return $_SESSION[$key] ?? $default;
     }
 
+    public function has(string $key)
+    {
+        return isset($_SESSION[$key]);
+    }
+
     public function getFlash(string $key, $default = null)
     {
         $value = $this->get($key, $default);
