@@ -2,6 +2,8 @@
 
 namespace App\Kernel\Container;
 
+use App\Kernel\Auth\Auth;
+use App\Kernel\Auth\AuthInterface;
 use App\Kernel\Config\Config;
 use App\Kernel\Config\ConfigInterface;
 use App\Kernel\Database\Database;
@@ -37,6 +39,8 @@ class Container
 
     public readonly DatabaseInterface $database;
 
+    public readonly AuthInterface $auth;
+
     public function __construct()
     {
         $this->registerServices();
@@ -51,13 +55,15 @@ class Container
         $this->validator = new Validator();
         $this->config = new Config();
         $this->database = new Database($this->config);
+        $this->auth = new Auth($this->database, $this->session, $this->config);
         $this->request->setValidator($this->validator);
         $this->router = new Router(
             $this->view,
             $this->request,
             $this->redirect,
             $this->session,
-            $this->database
+            $this->database,
+            $this->auth
         );
     }
 }

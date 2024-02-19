@@ -6,9 +6,9 @@
 ?>
 
 <?php $view->renderComponent('start'); ?>
-Register Page
+Auth Page
 
-<form action="/register" method="post">
+<form action="/auth" method="post">
   <label>
     Email
     <input type="email" name="email">
@@ -34,6 +34,6 @@ Register Page
     </ul>
   <?php } ?>
   <br>
-  <button>Register</button>
+  <button>Auth</button>
 </form>
 <?php $view->renderComponent('end'); ?>

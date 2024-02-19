@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AuthController;
 use App\Controllers\IndexController;
 use App\Controllers\MoviesController;
 use App\Controllers\NotFoundController;
@@ -13,5 +14,7 @@ return [
     Route::post('/admin/movies/add', [MoviesController::class, 'store']),
     Route::get('/register', [RegisterController::class, 'index']),
     Route::post('/register', [RegisterController::class, 'register']),
+    Route::get('/auth', [AuthController::class, 'index']),
+    Route::post('/auth', [AuthController::class, 'auth']),
     Route::get('/not-found', [NotFoundController::class, 'index']),
 ];
